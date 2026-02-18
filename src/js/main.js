@@ -68,7 +68,7 @@ function submitForm(e) {
     return;
   }
 
-  // Mostrar el spinner por 3 segundos antes de consultar la API 
+  // Mostrar el spinner por 3 segundos antes de consultar la API
   showSpinner();
 
   setTimeout(() => {
@@ -93,41 +93,28 @@ function showQuoteHTML(quote) {
   // Extraer los valores necesarios del objeto quote
   const { PRICE, HIGHDAY, LOWDAY, CHANGEPCT24HOUR, LASTUPDATE } = quote;
 
-  // Limpiar el HTML previo
-  clearPreviousResults();
-
   // Crear el contenedor de resultados
-  const resultsCard = document.createElement(`div`);
-  resultsCard.classList.add(`results-card`);
-  quoteForm.parentElement.appendChild(resultsCard);
+  const resultsCard = prepareContainer();
 
-  // Crear el HTML para mostrar la cotización
-  const price = document.createElement(`p`);
-  price.classList.add(`results-card__text`);
-  price.innerHTML = `Precio: <span class="results-card__highlight">${PRICE}</span>`;
+  // Crear un arreglo de objetos para almacenar la informacion para mostrar
+  const quoteData = [
+    { label: `Precio`, value: PRICE },
+    { label: `Precio más alto del día`, value: HIGHDAY },
+    { label: `Precio más bajo del día`, value: LOWDAY },
+    { label: `Últimas 24 horas`, value: `${CHANGEPCT24HOUR}%` },
+    { label: `Última actualización`, value: LASTUPDATE },
+  ];
 
-  const highPrice = document.createElement(`p`);
-  highPrice.classList.add(`results-card__text`);
-  highPrice.innerHTML = `Precio más alto del día: <span class="results-card__highlight">${HIGHDAY}</span>`;
+  // Iterar sobre el arreglo de objetos para crear los elementos HTML de forma dinamica y evitar repetir codigo
+  quoteData.forEach((item) => {
+    const { label, value } = item;
 
-  const lowPrice = document.createElement(`p`);
-  lowPrice.classList.add(`results-card__text`);
-  lowPrice.innerHTML = `Precio más bajo del día: <span class="results-card__highlight">${LOWDAY}</span>`;
+    const paragraph = document.createElement(`p`);
+    paragraph.classList.add(`results-card__text`);
+    paragraph.innerHTML = `${label}: <span class="results-card__highlight">${value}</span>`;
 
-  const lastHours = document.createElement(`p`);
-  lastHours.classList.add(`results-card__text`);
-  lastHours.innerHTML = `Últimas 24 horas: <span class="results-card__highlight">${CHANGEPCT24HOUR}%</span>`;
-
-  const lastUpdate = document.createElement(`p`);
-  lastUpdate.classList.add(`results-card__text`);
-  lastUpdate.innerHTML = `Última actualización: <span class="results-card__highlight">${LASTUPDATE}</span>`;
-
-  // Agregar los elementos al contenedor de resultados
-  resultsCard.appendChild(price);
-  resultsCard.appendChild(highPrice);
-  resultsCard.appendChild(lowPrice);
-  resultsCard.appendChild(lastHours);
-  resultsCard.appendChild(lastUpdate);
+    resultsCard.appendChild(paragraph);
+  });
 }
 
 function showAlert(message) {
@@ -151,20 +138,31 @@ function showAlert(message) {
   }
 }
 
-/* Funcion para borrar resultados anteriores */
-function clearPreviousResults() {
-  const existingResults = document.querySelector(`.results-card`);
-  if (existingResults) {
-    existingResults.remove();
+function prepareContainer() {
+  let resultsCard = document.querySelector(`.results-card`);
+
+  if (!resultsCard) {
+    resultsCard = document.createElement(`div`);
+    resultsCard.classList.add(`results-card`);
+    quoteForm.parentElement.appendChild(resultsCard);
+
+    return resultsCard;
+  }
+
+  clearHTML(resultsCard);
+
+  return resultsCard;
+}
+
+/* Funcion para borrar el HTML previo */
+function clearHTML(container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
 }
 
 function showSpinner() {
-  clearPreviousResults();
-
-  const resultsCard = document.createElement(`div`);
-  resultsCard.classList.add(`results-card`);
-  quoteForm.parentElement.appendChild(resultsCard);
+  const resultsCard = prepareContainer();
 
   const spinner = document.createElement(`div`);
   spinner.classList.add(`sk-folding-cube`);
