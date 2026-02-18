@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CoinScope | Cotizador de Criptomonedas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__container">
+        <h2 class="header__heading">CoinScope</h2>
+      </div>
+    </header>
+    <main class="main">
+      <div class="main__grid main__container">
+        <section class="main__form-container">
+          <form action="" id="quote-form" class="quote-form">
+            <fieldset class="quote-form__group">
+              <legend class="quote-form__legend">
+                <h3 class="quote-form__heading">
+                  Cotizar criptomoneda
+                  <span class="quote-form__heading-subtext"> En tiempo real </span>
+                </h3>
+              </legend>
+
+              <div class="quote-form__field">
+                <label for="currency" class="quote-form__label">
+                  Elige tu moneda
+                </label>
+                <select name="currency" id="currency" class="quote-form__select">
+                  <option value="" disabled selected>--Seleccione--</option>
+                  <option value="USD">Dólar estadounidense</option>
+                  <option value="MXN">Peso mexicano</option>
+                  <option value="EUR">Euro</option>
+                  <option value="JPY">Yen Japonés</option>
+                  <option value="CAD">Dólar canadiense</option>
+                </select>
+              </div>
+              <div class="quote-form__field">
+                <label for="cryptocurrency" class="quote-form__label"
+                  >Elige tu Criptomoneda</label
+                >
+                <select
+                  name="cryptocurrency"
+                  id="cryptocurrency"
+                  class="quote-form__select"
+                >
+                  <option value="" disabled selected>--Seleccionar--</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <input type="submit" value="Cotizar" class="quote-form__btn" />
+          </form>
+        </section>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer__container">
+        <p class="footer__text">
+          &copy; 2026 CoinScope - Cotizador de Criptomonedas
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
